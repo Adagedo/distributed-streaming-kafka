@@ -28,18 +28,17 @@ public class KafkaProducer{
     public void sendMessage() throws StreamException, InterruptedException {
         String topic = "streaming-recent-changes";
         BackgroundEventHandler eventHandler = new WikimediaHandler(template, topic);
-        EventSource eventSourceBuilder = buildSource(eventHandler);
-        eventSourceBuilder.start();
+        BackgroundEventSource eventSource = buildSource(eventHandler);
+        eventSource.start();
         Thread.sleep(Long.MAX_VALUE);
     }
 
-    private EventSource buildSource(BackgroundEventHandler backgroundEventHandler){
-        BackgroundEventSource eventSource = new BackgroundEventSource.Builder(
+    private BackgroundEventSource buildSource(BackgroundEventHandler backgroundEventHandler){
+        return new BackgroundEventSource.Builder(
                 backgroundEventHandler,
                 new EventSource.Builder(ConnectStrategy.http(URI.create(wikimediaUrl))
+                        .header("User-Agent", "spring-kafka-demo/1.0")
                         .connectTimeout(5, TimeUnit.SECONDS))
         ).build();
-
-        return eventSource.getEventSource();
     }
 }

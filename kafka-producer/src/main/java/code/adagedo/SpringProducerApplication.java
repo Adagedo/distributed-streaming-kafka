@@ -1,6 +1,7 @@
 package code.adagedo;
 
 import code.adagedo.producer.KafkaProducer;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,8 @@ public class SpringProducerApplication implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String @NonNull ... args) throws Exception {
+        System.out.println(">>> App booted successfully! Triggering Wikimedia producer...");
         producer.sendMessage();
     }
 }

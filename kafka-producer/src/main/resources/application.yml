@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: kafka-producer
+  kafka:
+    bootstrap-servers: localhost:9092
+    streams:
+      application-id: realtime-stream
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes.StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes.StringSerde
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  docker:
+    compose:
+      file: compose.yml
+      lifecycle-management: start-and-stop
+wikimedia:
+  url: https://stream.wikimedia.org/v2/stream/recentchange

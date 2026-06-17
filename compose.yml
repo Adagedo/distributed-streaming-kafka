@@ -1,17 +1,21 @@
 services:
-  Kafka:
+  kafka_application:
     image: apache/kafka:latest
     container_name: kafka_application
     ports:
       - "9092:9092"
     environment:
+      # NATIVE IMAGE CONFIGURATION
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@localhost:9093'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka_application:9093'
       KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,EXTERNAL://0.0.0.0:29092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092,EXTERNAL://kafka:29092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092,EXTERNAL://kafka_application:29092'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      # THE KEY FIX: These variables force the native apache/kafka image to auto-format seamlessly
+      # without needing a manual shell command script wrapper!
+      LOG_DIR: '/tmp/kraft-combined-logs'
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
 
   kafka-ui:
@@ -20,9 +24,10 @@ services:
     ports:
       - "8088:8088"
     labels:
+      # This stops Spring from hanging if the UI container takes an extra second to initialize
       - "org.springframework.boot.readiness-check.tcp.disable=true"
     environment:
       KAFKA_CLUSTERS_0_NAME: "local-cluster"
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "Kafka:29092"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka_application:29092"
     depends_on:
-      - Kafka
+      - kafka_application
