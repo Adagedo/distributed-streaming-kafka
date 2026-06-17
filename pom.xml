@@ -22,7 +22,8 @@
 	</developers>
 	<modules>
 		<module>kafka-producer</module>
-	</modules>
+        <module>kafka-comsumer</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
