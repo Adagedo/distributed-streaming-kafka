@@ -2,6 +2,11 @@ spring:
   application:
     name: kafka-producer
   Kafka:
+    streams:
+      application-id: realtime-stream
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer

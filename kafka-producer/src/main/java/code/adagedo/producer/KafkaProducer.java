@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class KafkaProducer {
 
-    private KafkaTemplate<String, String> template;
+    private final KafkaTemplate<String, String> template;
 
-    void sendStreams(String message){
+    void publishEvents(String message){
         String topic = "streaming-recent-changes";
+        template.send(topic, message);
     }
-
-
 }
+//https://stream.wikimedia.org/v2/stream/recentchange
