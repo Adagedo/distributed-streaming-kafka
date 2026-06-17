@@ -57,10 +57,7 @@ public class KafkaStreamConfiguration {
                 .reduce((value1, value2) -> value1 + value2, Named.as("windowStore"))
                 .toStream()
                 .map((windowedId, value) -> new KeyValue<>(windowedId.key(), value))
-                .filter((key, value) -> value.length() > 40)
-                .to("streaming-processed-changes", Produced.with(Serdes.String(), Serdes.String()));
-
-        stream.print(Printed.toSysOut());
+                .filter((key, value) -> value.length() > 40);
         return stream;
     }
 }

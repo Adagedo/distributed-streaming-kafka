@@ -50,10 +50,8 @@ public class WikimediaHandler implements BackgroundEventHandler {
      * @throws Exception throwing an exception here will cause it to be logged and also sent to {@link #onError(Throwable)}
      */
     @Override
-    public void onMessage(String event, MessageEvent messageEvent) throws Exception {
+    public void onMessage(String event, MessageEvent messageEvent) {
         log.info("New Event Data: {} ", messageEvent.getData());
-        final int sleepDurations = 1000;
-        Thread.sleep(sleepDurations);
         producerTemplate.send(topic, messageEvent.getData());
         log.info("event send to kafka topic!!!");
     }
