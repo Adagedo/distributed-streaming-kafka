@@ -25,9 +25,8 @@ public class KafkaProducer{
         this.wikimediaUrl = wikimediaUrl;
     }
 
-    public void publishEvents(String message) throws StreamException, InterruptedException {
+    public void sendMessage() throws StreamException, InterruptedException {
         String topic = "streaming-recent-changes";
-
         BackgroundEventHandler eventHandler = new WikimediaHandler(template, topic);
         EventSource eventSourceBuilder = buildSource(eventHandler);
         eventSourceBuilder.start();
@@ -37,10 +36,10 @@ public class KafkaProducer{
     private EventSource buildSource(BackgroundEventHandler backgroundEventHandler){
         BackgroundEventSource eventSource = new BackgroundEventSource.Builder(
                 backgroundEventHandler,
-                new EventSource.Builder(ConnectStrategy.http(URI.create(wikimediaUrl)).connectTimeout(5, TimeUnit.SECONDS))
+                new EventSource.Builder(ConnectStrategy.http(URI.create(wikimediaUrl))
+                        .connectTimeout(5, TimeUnit.SECONDS))
         ).build();
 
         return eventSource.getEventSource();
     }
 }
-//https://stream.wikimedia.org/v2/stream/recentchange

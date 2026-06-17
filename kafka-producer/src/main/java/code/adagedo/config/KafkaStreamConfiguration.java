@@ -60,7 +60,7 @@ public class KafkaStreamConfiguration {
                 .toStream()
                 .map((windowedId, value) -> new KeyValue<>(windowedId.key(), value))
                 .filter((i, s) -> s.length() > 40)
-                .to("streamingTopic2");
+                .to("streaming-recent-changes");
         stream.print(Printed.toSysOut());
         return stream;
     }

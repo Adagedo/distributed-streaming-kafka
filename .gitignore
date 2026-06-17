@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+#https://github.com/coding-nomadic/realtime-wikimedia-streamer/blob/main/wikimedia-kafka-producer/src/main/java/com/wikimedia/WikimediaKafkaProducerApplication.java
