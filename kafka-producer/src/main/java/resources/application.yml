@@ -10,3 +10,5 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  wikimedia:
+    url: https://stream.wikimedia.org/v2/stream/recentchange
