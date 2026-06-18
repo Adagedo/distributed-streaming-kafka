@@ -16,4 +16,4 @@ spring:
       file: compose.yml
       lifecycle-management: start-and-stop
 wikimedia:
-  url: https://stream.wikimedia.org/v2/stream/recentchange
+  url: https://stream.wikimedia.org/v 2/stream/recentchange
