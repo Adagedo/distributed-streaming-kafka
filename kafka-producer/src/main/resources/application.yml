@@ -3,12 +3,16 @@ spring:
     name: kafka-producer
   kafka:
     bootstrap-servers: localhost:9092
+    properties:
+      request.timeout.ms: 30000
+      retry.backoff.ms: 500
     streams:
-      application-id: realtime-stream
+      application-id: realtime-stream-v2
       properties:
         default.key.serde: org.apache.kafka.common.serialization.Serdes.StringSerde
         default.value.serde: org.apache.kafka.common.serialization.Serdes.StringSerde
     producer:
+      group-id: realtime-stream
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   docker:
@@ -16,4 +20,4 @@ spring:
       file: compose.yml
       lifecycle-management: start-and-stop
 wikimedia:
-  url: https://stream.wikimedia.org/v 2/stream/recentchange
+  url: https://stream.wikimedia.org/v2/stream/recentchange

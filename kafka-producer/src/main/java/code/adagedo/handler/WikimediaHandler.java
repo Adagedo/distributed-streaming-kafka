@@ -52,7 +52,13 @@ public class WikimediaHandler implements BackgroundEventHandler {
     @Override
     public void onMessage(String event, MessageEvent messageEvent) {
         log.info("New Event Data: {} ", messageEvent.getData());
-        producerTemplate.send(topic, messageEvent.getData());
+        producerTemplate.send(topic, messageEvent.getData()).whenComplete((result, ex) -> {
+            if(ex != null){
+                System.out.println("FAILED TO SEND TO KAFKA "+ ex.getMessage());
+            }else {
+                System.out.println("SENT -> Topic =" + result.getRecordMetadata().topic() + " offset " + result.getRecordMetadata().offset());
+            }
+        });
         log.info("event send to kafka topic!!!");
     }
 

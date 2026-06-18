@@ -11,7 +11,7 @@ public class KafkaTopicConfiguration {
     @Bean
     public NewTopic topic() {
         return TopicBuilder
-                .name("streaming-recent-changes")
+                .name("distributed_streaming")
                 .build();
     }
 }

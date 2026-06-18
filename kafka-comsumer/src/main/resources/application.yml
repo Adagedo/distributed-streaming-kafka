@@ -2,12 +2,18 @@ spring:
   application:
     name: kafka-consumer
   kafka:
+    bootstrap-servers: localhost:9092
     consumer:
-      bootstrap-servers: localhost:9092
-      group-id: realtime-stream
+      group-id: realtime-stream-v2
+      properties:
+        request.timeout.ms: 30000
+        retry.backoff.ms: 500
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
+  docker:
+    compose:
+      file: compose.yml
+      lifecycle-management: start-and-stop
 
 

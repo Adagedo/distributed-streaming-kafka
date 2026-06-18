@@ -10,7 +10,7 @@ public class KafkaConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(topics = "streaming-recent-changes", groupId = "realtime-stream")
+    @KafkaListener(topics = "distributed_streaming", groupId = "realtime-stream-v2")
     public void consume(String eventMessage) {
         LOGGER.info("Event message received, {}", eventMessage);
         System.out.println("Event message received: " + eventMessage );

@@ -26,7 +26,7 @@ public class KafkaProducer{
     }
 
     public void sendMessage() throws StreamException, InterruptedException {
-        String topic = "streaming-recent-changes";
+        String topic = "distributed_streaming";
         BackgroundEventHandler eventHandler = new WikimediaHandler(template, topic);
         BackgroundEventSource eventSource = buildSource(eventHandler);
         eventSource.start();
